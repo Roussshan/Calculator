@@ -67,3 +67,36 @@ def evaluate_expression(expression):
                 value /= right
 
         return value
+    
+    def parse_factor():
+        nonlocal index
+
+        if index < len(tokens) and tokens[index] == "(":
+            index += 1
+            value = parse_expression()
+
+            if index >= len(tokens) or tokens[index] != ")":
+                raise ValueError("Mismatched parentheses")
+
+            index += 1
+            return value
+
+        if index < len(tokens) and tokens[index] in ("+", "-"):
+            operator = tokens[index]
+            index += 1
+            value = parse_factor()
+
+            if operator == "-":
+                return -value
+            return value
+
+        if index >= len(tokens):
+            raise ValueError("Invalid expression")
+
+        token = tokens[index]
+        index += 1
+
+        try:
+            return float(token)
+        except ValueError as exc:
+            raise ValueError("Invalid expression") from exc
