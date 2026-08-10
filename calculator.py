@@ -107,3 +107,26 @@ def evaluate_expression(expression):
         raise ValueError("Invalid expression")
 
     return result
+
+if __name__ == "__main__":
+    print("Simple Calculator")
+
+    while True:
+        try:
+            expression = input("Enter expression (or 'quit' to exit): ")
+        except KeyboardInterrupt:
+            print("\nGoodbye!")
+            break
+
+        if expression.strip().lower() in {"quit", "exit"}:
+            print("Goodbye!")
+            break
+
+        try:
+            result = evaluate_expression(expression)
+            if result.is_integer():
+                print(int(result))
+            else:
+                print(result)
+        except Exception as exc:
+            print(f"Error: {exc}")
