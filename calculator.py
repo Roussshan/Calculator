@@ -100,3 +100,10 @@ def evaluate_expression(expression):
             return float(token)
         except ValueError as exc:
             raise ValueError("Invalid expression") from exc
+
+    result = parse_expression()
+
+    if index != len(tokens):
+        raise ValueError("Invalid expression")
+
+    return result
