@@ -30,4 +30,22 @@ def tokenize(expression):
 
     return tokens
 
+def evaluate_expression(expression):
+    tokens = tokenize(expression)
+    index = 0
 
+    def parse_expression():
+        nonlocal index
+        value = parse_term()
+
+        while index < len(tokens) and tokens[index] in ("+", "-"):
+            operator = tokens[index]
+            index += 1
+            right = parse_term()
+
+            if operator == "+":
+                value += right
+            else:
+                value -= right
+
+        return value
