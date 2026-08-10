@@ -34,7 +34,7 @@ def evaluate_expression(expression):
     tokens = tokenize(expression)
     index = 0
 
-    def parse_expression():
+   def parse_expression():
         nonlocal index
         value = parse_term()
 
@@ -47,5 +47,23 @@ def evaluate_expression(expression):
                 value += right
             else:
                 value -= right
+
+        return value
+
+   def parse_term():
+        nonlocal index
+        value = parse_factor()
+
+        while index < len(tokens) and tokens[index] in ("*", "/"):
+            operator = tokens[index]
+            index += 1
+            right = parse_factor()
+
+            if operator == "*":
+                value *= right
+            else:
+                if right == 0:
+                    raise ZeroDivisionError("Cannot divide by zero")
+                value /= right
 
         return value
